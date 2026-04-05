@@ -17,15 +17,15 @@ export function SectionCard({
   className,
 }: SectionCardProps) {
   return (
-    <section className={clsx("glass-card animate-rise rounded-[28px] p-5 shadow-glow sm:p-6", className)}>
-      <div className="mb-5 flex items-start justify-between gap-4">
-        <div>
-          <h2 className="text-lg font-semibold text-[color:var(--text)]">{title}</h2>
-          {subtitle ? <p className="mt-1 text-sm text-[color:var(--muted)]">{subtitle}</p> : null}
+    <section className={clsx("glass-card animate-rise rounded-[30px] p-5 sm:p-6", className)}>
+      <div className="relative mb-6 flex items-start justify-between gap-4 border-b border-white/6 pb-5">
+        <div className="max-w-xl">
+          <h2 className="text-xl font-semibold tracking-tight text-[color:var(--text)]">{title}</h2>
+          {subtitle ? <p className="mt-2 text-[15px] leading-7 text-[color:var(--muted)]">{subtitle}</p> : null}
         </div>
-        {action}
+        <div className="shrink-0">{action}</div>
       </div>
-      {children}
+      <div className="relative">{children}</div>
     </section>
   );
 }

@@ -36,7 +36,7 @@ export function CalculatorSection({
             onClick={() => onSetPreferences((current) => ({ ...current, calculatorMode: mode }))}
             aria-pressed={preferences.calculatorMode === mode}
             className={clsx(
-              "rounded-full px-4 py-2 text-sm font-medium transition",
+              "rounded-full px-4 py-2.5 text-sm font-medium transition",
               preferences.calculatorMode === mode
                 ? "bg-[color:var(--gold)] text-black"
                 : "surface-card text-[color:var(--muted)]",
@@ -65,9 +65,9 @@ export function CalculatorSection({
           onChange={onSetCalculatorInput}
         />
 
-        <div className="rounded-[24px] bg-black/5 p-4 dark:bg-white/5">
-          <p className="text-sm text-[color:var(--muted)]">Result</p>
-          <p className="mt-3 text-3xl font-semibold">
+        <div className="gold-panel rounded-[28px] p-5">
+          <p className="text-sm uppercase tracking-[0.2em] text-[color:var(--muted)]">Result</p>
+          <p className="mt-3 text-4xl font-semibold tracking-[-0.04em]">
             {preferences.calculatorMode === "RM_TO_GRAM"
               ? `${formatNumber(calculationResult, 4)} g`
               : formatCurrency(calculationResult, "MYR")}
@@ -82,7 +82,7 @@ export function CalculatorSection({
             <button
               key={value}
               onClick={() => onSetCalculatorInput(String(value))}
-              className="surface-card rounded-full px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5"
+              className="surface-card rounded-full px-4 py-2.5 text-sm font-medium transition hover:-translate-y-0.5 hover:border-[color:var(--gold)]/30"
             >
               {preferences.calculatorMode === "RM_TO_GRAM"
                 ? `RM ${value}`

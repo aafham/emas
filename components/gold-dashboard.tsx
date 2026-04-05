@@ -348,15 +348,23 @@ export function GoldDashboard() {
           />
         </div>
 
-        <div className="grid gap-5 xl:grid-cols-[1fr,1fr,0.9fr]">
-          <div id="calculator">
-            <CalculatorSection
-              preferences={preferences}
-              calculatorInput={calculatorInput}
-              calculationResult={calculationResult}
-              calculatorError={calculatorError}
-              onSetPreferences={setPreferences}
-              onSetCalculatorInput={setCalculatorInput}
+        <div className="grid gap-5 xl:grid-cols-[0.82fr,1.18fr]">
+          <div className="grid gap-5">
+            <div id="calculator">
+              <CalculatorSection
+                preferences={preferences}
+                calculatorInput={calculatorInput}
+                calculationResult={calculationResult}
+                calculatorError={calculatorError}
+                onSetPreferences={setPreferences}
+                onSetCalculatorInput={setCalculatorInput}
+              />
+            </div>
+            <AlertsSection
+              alertState={alertState}
+              alertTargetError={alertTargetError}
+              priceHistory={priceData?.history ?? []}
+              onSetAlertState={setAlertState}
             />
           </div>
           <div id="portfolio">
@@ -367,16 +375,10 @@ export function GoldDashboard() {
               onDeleteTransaction={deletePortfolioTransaction}
             />
           </div>
-          <AlertsSection
-            alertState={alertState}
-            alertTargetError={alertTargetError}
-            priceHistory={priceData?.history ?? []}
-            onSetAlertState={setAlertState}
-          />
         </div>
 
         <section className="grid gap-4 lg:grid-cols-[1.3fr,0.7fr]">
-          <div className="surface-card rounded-[28px] p-5 sm:p-6">
+          <div className="surface-card rounded-[30px] p-5 sm:p-6">
             <h2 className="text-lg font-semibold">How pricing works</h2>
             <p className="mt-2 text-sm leading-6 text-[color:var(--muted)]">
               We estimate the buy price from live XAU/USD spot, convert using USD/MYR, divide by 31.1035 grams per
@@ -384,7 +386,7 @@ export function GoldDashboard() {
               displaying raw spot alone.
             </p>
           </div>
-          <div className="surface-card rounded-[28px] p-5 sm:p-6">
+          <div className="surface-card rounded-[30px] p-5 sm:p-6">
             <p className="text-sm font-medium uppercase tracking-[0.2em] text-[color:var(--gold)]">Disclaimer</p>
             <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">
               This app provides estimated gold prices and is not affiliated with Public Gold. Actual prices may differ.

@@ -26,7 +26,7 @@ export function AlertsSection({
           onClick={() => onSetAlertState((current) => ({ ...current, enabled: !current.enabled }))}
           aria-pressed={alertState.enabled}
           className={clsx(
-            "flex w-full items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium",
+            "flex w-full items-center justify-between rounded-[24px] px-4 py-3.5 text-sm font-medium",
             alertState.enabled ? "bg-[color:var(--gold)] text-black" : "surface-card",
           )}
         >
@@ -50,11 +50,19 @@ export function AlertsSection({
           }
         />
 
-        <div className="rounded-2xl bg-black/5 p-4 dark:bg-white/5">
-          <p className="text-sm text-[color:var(--muted)]">Last 10 updates</p>
-          <div className="mt-3 space-y-2">
+        <div className="surface-card rounded-[26px] p-4">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-sm text-[color:var(--muted)]">Last 10 updates</p>
+            <span className="rounded-full bg-black/10 px-2.5 py-1 text-xs text-[color:var(--muted)] dark:bg-white/5">
+              {priceHistory.length} points
+            </span>
+          </div>
+          <div className="mt-3 max-h-[320px] space-y-2 overflow-y-auto pr-1">
             {priceHistory.slice().reverse().map((point) => (
-              <div key={point.timestamp} className="flex items-center justify-between text-sm">
+              <div
+                key={point.timestamp}
+                className="flex items-center justify-between rounded-2xl border border-white/6 bg-black/5 px-3 py-2.5 text-sm dark:bg-white/[0.02]"
+              >
                 <span className="text-[color:var(--muted)]">
                   {new Date(point.timestamp).toLocaleString("en-MY", {
                     dateStyle: "medium",

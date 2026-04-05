@@ -78,7 +78,7 @@ export function PortfolioSection({
 
   return (
     <SectionCard title="Portfolio" subtitle="Track every buy and sell, then let the dashboard calculate holdings and performance.">
-      <div className="grid gap-4">
+      <div className="grid gap-5">
         <div className="flex flex-wrap gap-2">
           {(["BUY", "SELL"] as const).map((type) => (
             <button
@@ -86,7 +86,7 @@ export function PortfolioSection({
               onClick={() => setTransactionType(type)}
               aria-pressed={transactionType === type}
               className={clsx(
-                "rounded-full px-4 py-2 text-sm font-medium transition",
+                "rounded-full px-4 py-2.5 text-sm font-medium transition",
                 transactionType === type
                   ? "bg-[color:var(--gold)] text-black"
                   : "surface-card text-[color:var(--muted)]",
@@ -97,44 +97,46 @@ export function PortfolioSection({
           ))}
         </div>
 
-        <div className="grid gap-4">
-          <LabeledInput
-            label="Transaction grams"
-            type="number"
-            value={gramsInput}
-            min={0}
-            step="0.0001"
-            helperText={transactionType === "BUY" ? "Enter how many grams you bought." : "Enter how many grams you sold."}
-            error={null}
-            onChange={setGramsInput}
-          />
-          <LabeledInput
-            label="Price per gram (RM)"
-            type="number"
-            value={priceInput}
-            min={0}
-            step="0.01"
-            helperText="Use the actual transaction price, not only the current estimate."
-            error={null}
-            onChange={setPriceInput}
-          />
-          <LabeledInput
-            label="Note"
-            value={noteInput}
-            helperText="Optional: dealer name, branch, or anything you want to remember."
-            error={null}
-            onChange={setNoteInput}
-          />
-          {formError ? <p className="text-xs font-medium text-[color:var(--danger)]">{formError}</p> : null}
-          <button
-            onClick={submitTransaction}
-            className="rounded-2xl bg-[color:var(--gold)] px-4 py-3 text-sm font-semibold text-black transition hover:opacity-90"
-          >
-            Save transaction
-          </button>
+        <div className="surface-card rounded-[28px] p-4 sm:p-5">
+          <div className="grid gap-4 lg:grid-cols-[0.9fr,0.9fr,1.2fr,auto] lg:items-end">
+            <LabeledInput
+              label="Transaction grams"
+              type="number"
+              value={gramsInput}
+              min={0}
+              step="0.0001"
+              helperText={transactionType === "BUY" ? "How many grams you bought." : "How many grams you sold."}
+              error={null}
+              onChange={setGramsInput}
+            />
+            <LabeledInput
+              label="Price per gram (RM)"
+              type="number"
+              value={priceInput}
+              min={0}
+              step="0.01"
+              helperText="Use the actual transaction price."
+              error={null}
+              onChange={setPriceInput}
+            />
+            <LabeledInput
+              label="Note"
+              value={noteInput}
+              helperText="Optional dealer, branch, or memo."
+              error={null}
+              onChange={setNoteInput}
+            />
+            <button
+              onClick={submitTransaction}
+              className="h-[54px] rounded-[20px] bg-[color:var(--gold)] px-5 text-sm font-semibold text-black transition hover:opacity-90"
+            >
+              Save transaction
+            </button>
+          </div>
+          {formError ? <p className="mt-3 text-xs font-medium text-[color:var(--danger)]">{formError}</p> : null}
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           <Metric label="Current holdings" value={`${formatNumber(portfolioSummary.gramsHeld, 4)} g`} />
           <Metric label="Average cost" value={formatCurrency(portfolioSummary.averageBuyPrice, "MYR")} />
           <Metric label="Current value" value={formatCurrency(portfolioSummary.currentValue, "MYR")} />
@@ -145,7 +147,7 @@ export function PortfolioSection({
 
         <div
           className={clsx(
-            "rounded-2xl px-4 py-3 text-sm font-medium",
+            "rounded-[24px] px-4 py-3.5 text-sm font-medium",
             portfolioSummary.profitLoss >= 0
               ? "bg-emerald-500/12 text-[color:var(--success)]"
               : "bg-rose-500/12 text-[color:var(--danger)]",
@@ -154,10 +156,10 @@ export function PortfolioSection({
           Total return: {formatCurrency(portfolioSummary.profitLoss, "MYR")} ({formatNumber(portfolioSummary.profitPercent)}%)
         </div>
 
-        <div className="rounded-2xl bg-black/5 p-4 dark:bg-white/5">
+        <div className="surface-card rounded-[28px] p-4 sm:p-5">
           <div className="flex items-center justify-between gap-3">
             <p className="text-sm text-[color:var(--muted)]">Transaction history</p>
-            <p className="text-xs text-[color:var(--muted)]">
+            <p className="rounded-full bg-black/10 px-3 py-1 text-xs text-[color:var(--muted)] dark:bg-white/5">
               Bought {formatNumber(portfolioSummary.totalBoughtGrams, 4)}g, sold {formatNumber(portfolioSummary.totalSoldGrams, 4)}g
             </p>
           </div>
@@ -169,7 +171,7 @@ export function PortfolioSection({
               {sortedTransactions.map((transaction) => (
                 <div
                   key={transaction.id}
-                  className="flex items-start justify-between gap-3 rounded-2xl border border-white/10 px-4 py-3"
+                  className="flex items-start justify-between gap-3 rounded-[24px] border border-white/8 bg-black/5 px-4 py-3.5 dark:bg-white/[0.02]"
                 >
                   <div>
                     <div className="flex items-center gap-2">

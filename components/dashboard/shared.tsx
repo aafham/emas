@@ -62,9 +62,9 @@ export function getDataStatus(priceData: GoldApiResponse | null, manualMode: boo
 
 export function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-black/5 px-4 py-3 dark:bg-white/5">
+    <div className="surface-card relative rounded-[24px] px-4 py-4">
       <p className="text-sm text-[color:var(--muted)]">{label}</p>
-      <p className="mt-2 text-lg font-semibold">{value}</p>
+      <p className="mt-2 text-xl font-semibold tracking-tight">{value}</p>
     </div>
   );
 }
@@ -97,11 +97,11 @@ function MiniStat({
   value: string;
 }) {
   return (
-    <div className="surface-card flex items-center gap-3 rounded-[24px] p-4">
-      <div className="rounded-2xl bg-[color:var(--gold)]/15 p-3 text-[color:var(--gold)]">{icon}</div>
+    <div className="surface-card relative flex items-center gap-3 rounded-[26px] p-4">
+      <div className="rounded-[18px] bg-[color:var(--gold)]/12 p-3 text-[color:var(--gold)]">{icon}</div>
       <div>
         <p className="text-sm text-[color:var(--muted)]">{label}</p>
-        <p className="mt-1 text-lg font-semibold">{value}</p>
+        <p className="mt-1 text-2xl font-semibold tracking-tight">{value}</p>
       </div>
     </div>
   );
@@ -133,7 +133,7 @@ export function LabeledInput({
 
   return (
     <label className="block">
-      <span className="text-sm text-[color:var(--muted)]">{label}</span>
+      <span className="text-sm font-medium text-[color:var(--muted)]">{label}</span>
       <input
         id={id}
         type={type}
@@ -144,7 +144,7 @@ export function LabeledInput({
         aria-invalid={Boolean(error)}
         aria-describedby={describedBy}
         className={clsx(
-          "mt-2 w-full rounded-2xl border bg-transparent px-4 py-3 outline-none ring-0 transition placeholder:text-[color:var(--muted)] focus:border-[color:var(--gold)]",
+          "mt-2 w-full rounded-[22px] border bg-black/5 px-4 py-3.5 outline-none ring-0 transition placeholder:text-[color:var(--muted)] focus:border-[color:var(--gold)] focus:bg-black/10 dark:bg-white/[0.03] dark:focus:bg-white/[0.05]",
           error ? "border-rose-400/60" : "border-white/10",
         )}
       />
