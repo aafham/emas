@@ -333,21 +333,25 @@ export function GoldDashboard() {
         </div>
 
         <div className="grid gap-5 xl:grid-cols-[1fr,1fr,0.9fr]">
-          <CalculatorSection
-            preferences={preferences}
-            calculatorInput={calculatorInput}
-            calculationResult={calculationResult}
-            calculatorError={calculatorError}
-            onSetPreferences={setPreferences}
-            onSetCalculatorInput={setCalculatorInput}
-          />
-          <PortfolioSection
-            portfolio={portfolio}
-            portfolioSummary={portfolioSummary}
-            portfolioGramsError={portfolioGramsError}
-            portfolioAverageError={portfolioAverageError}
-            onSetPortfolio={setPortfolio}
-          />
+          <div id="calculator">
+            <CalculatorSection
+              preferences={preferences}
+              calculatorInput={calculatorInput}
+              calculationResult={calculationResult}
+              calculatorError={calculatorError}
+              onSetPreferences={setPreferences}
+              onSetCalculatorInput={setCalculatorInput}
+            />
+          </div>
+          <div id="portfolio">
+            <PortfolioSection
+              portfolio={portfolio}
+              portfolioSummary={portfolioSummary}
+              portfolioGramsError={portfolioGramsError}
+              portfolioAverageError={portfolioAverageError}
+              onSetPortfolio={setPortfolio}
+            />
+          </div>
           <AlertsSection
             alertState={alertState}
             alertTargetError={alertTargetError}
