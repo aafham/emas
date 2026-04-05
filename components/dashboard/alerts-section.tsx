@@ -57,11 +57,16 @@ export function AlertsSection({
               {priceHistory.length} points
             </span>
           </div>
-          <div className="mt-3 max-h-[320px] space-y-2 overflow-y-auto pr-1">
-            {priceHistory.slice().reverse().map((point) => (
+          <div className="mt-3 max-h-[268px] space-y-1.5 overflow-y-auto pr-1">
+            {priceHistory.slice().reverse().map((point, index) => (
               <div
                 key={point.timestamp}
-                className="flex items-center justify-between rounded-2xl border border-white/6 bg-black/5 px-3 py-2.5 text-sm dark:bg-white/[0.02]"
+                className={clsx(
+                  "flex items-center justify-between rounded-xl px-3 py-2.5 text-sm transition",
+                  index === 0
+                    ? "border border-[color:var(--gold)]/18 bg-[color:var(--gold)]/8"
+                    : "border border-transparent bg-black/5 dark:bg-white/[0.02]",
+                )}
               >
                 <span className="text-[color:var(--muted)]">
                   {new Date(point.timestamp).toLocaleString("en-MY", {

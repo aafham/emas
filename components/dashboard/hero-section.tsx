@@ -52,20 +52,19 @@ export function DashboardHeroSection({
 }) {
   return (
     <section className="glass-card animate-rise rounded-[36px] p-6 sm:p-8">
-      <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(224,185,74,0.18),transparent_70%)] opacity-80" />
-      <div className="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div className="relative flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.34em] text-[color:var(--gold)]">Malaysia Gold Intelligence</p>
-          <h1 className="mt-4 max-w-4xl text-4xl font-semibold tracking-[-0.04em] text-[color:var(--text)] sm:text-5xl lg:text-6xl">
+          <h1 className="mt-4 max-w-4xl text-4xl font-semibold tracking-[-0.05em] text-[color:var(--text)] sm:text-5xl lg:text-[4.25rem] lg:leading-[0.95]">
             Premium gold tracking built for real buyers, stackers, and investors.
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-8 text-[color:var(--muted)] sm:text-lg">
+          <p className="mt-4 max-w-2xl text-base leading-8 text-[color:var(--muted)] sm:text-lg">
             Live XAU pricing, Public Gold-style spread simulation, fast portfolio monitoring, and offline-friendly
             protection in one installable dashboard.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:min-w-[480px]">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:min-w-[460px] lg:max-w-[520px]">
           <button
             onClick={onRefresh}
             aria-label="Refresh live gold pricing"
@@ -103,7 +102,7 @@ export function DashboardHeroSection({
         </div>
       </div>
 
-      <div className="relative mt-6 flex flex-wrap items-center gap-3">
+      <div className="relative mt-5 flex flex-wrap items-center gap-3">
         <div className={clsx("rounded-full border px-4 py-2 text-sm font-medium backdrop-blur", dataStatus.tone)}>
           {dataStatus.label}
         </div>
@@ -118,7 +117,7 @@ export function DashboardHeroSection({
             <div>
               <p className="text-sm text-[color:var(--muted)]">Estimated live buy price</p>
               <div className="mt-4 flex flex-wrap items-end gap-3">
-                <span className="text-5xl font-semibold tracking-[-0.05em] sm:text-6xl">
+                <span className="text-5xl font-semibold tracking-[-0.06em] sm:text-6xl">
                   {loading && !priceData ? "..." : formatCurrency(selectedPrice, preferences.currency)}
                 </span>
                 <span className="mb-2 rounded-full border border-[color:var(--gold)]/20 bg-black/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.28em] text-[color:var(--gold)]">

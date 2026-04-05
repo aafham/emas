@@ -98,7 +98,7 @@ export function PortfolioSection({
         </div>
 
         <div className="surface-card rounded-[28px] p-4 sm:p-5">
-          <div className="grid gap-4 lg:grid-cols-[0.9fr,0.9fr,1.2fr,auto] lg:items-end">
+          <div className="grid gap-4 xl:grid-cols-2">
             <LabeledInput
               label="Transaction grams"
               type="number"
@@ -119,6 +119,8 @@ export function PortfolioSection({
               error={null}
               onChange={setPriceInput}
             />
+          </div>
+          <div className="mt-4 grid gap-4 xl:grid-cols-[1.4fr,auto] xl:items-end">
             <LabeledInput
               label="Note"
               value={noteInput}
@@ -128,7 +130,7 @@ export function PortfolioSection({
             />
             <button
               onClick={submitTransaction}
-              className="h-[54px] rounded-[20px] bg-[color:var(--gold)] px-5 text-sm font-semibold text-black transition hover:opacity-90"
+              className="h-[54px] rounded-[20px] bg-[color:var(--gold)] px-6 text-sm font-semibold text-black transition hover:opacity-90 xl:min-w-[176px]"
             >
               Save transaction
             </button>
@@ -165,7 +167,12 @@ export function PortfolioSection({
           </div>
 
           {sortedTransactions.length === 0 ? (
-            <p className="mt-3 text-sm text-[color:var(--muted)]">No transactions yet. Add your first buy to start tracking performance.</p>
+            <div className="mt-4 rounded-[24px] border border-dashed border-white/10 bg-black/5 px-4 py-6 dark:bg-white/[0.02]">
+              <p className="text-sm font-medium text-[color:var(--text)]">No transactions yet</p>
+              <p className="mt-2 max-w-xl text-sm leading-7 text-[color:var(--muted)]">
+                Add your first buy above to start tracking holdings, remaining cost basis, and realized versus unrealized performance.
+              </p>
+            </div>
           ) : (
             <div className="mt-3 space-y-3">
               {sortedTransactions.map((transaction) => (

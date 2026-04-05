@@ -67,10 +67,15 @@ export function CalculatorSection({
 
         <div className="gold-panel rounded-[28px] p-5">
           <p className="text-sm uppercase tracking-[0.2em] text-[color:var(--muted)]">Result</p>
-          <p className="mt-3 text-4xl font-semibold tracking-[-0.04em]">
+          <p className="mt-3 text-[2.6rem] font-semibold tracking-[-0.05em] sm:text-5xl">
             {preferences.calculatorMode === "RM_TO_GRAM"
               ? `${formatNumber(calculationResult, 4)} g`
               : formatCurrency(calculationResult, "MYR")}
+          </p>
+          <p className="mt-2 text-sm text-[color:var(--muted)]">
+            {preferences.calculatorMode === "RM_TO_GRAM"
+              ? "Approximate weight you can buy at the current adjusted estimate."
+              : "Estimated ringgit value based on the current adjusted buy price."}
           </p>
           {preferences.calculatorMode === "DINAR_TO_RM" && (
             <p className="mt-2 text-sm text-[color:var(--muted)]">1 dinar = {DINAR_IN_GRAMS}g</p>
