@@ -43,16 +43,59 @@ export function convertValue(
 }
 
 export function calculatePortfolio(portfolio: PortfolioState, pricePerGram: number) {
-  const currentValue = portfolio.grams * pricePerGram;
-  const totalCost = portfolio.grams * portfolio.averageBuyPrice;
-  const profitLoss = currentValue - totalCost;
-  const profitPercent = totalCost > 0 ? (profitLoss / totalCost) * 100 : 0;
+  const sortedTransactions = [...portfolio.transactions].sort((a, b) =>
+    a.createdAt.localeCompare(b.createdAt),
+  );
+
+  let gramsHeld = 0;
+  let costBasis = 0;
+  let investedCapital = 0;
+  let realizedProfitLoss = 0;
+  let totalBoughtGrams = 0;
+  let totalSoldGrams = 0;
+
+  for (const transaction of sortedTransactions) {
+    if (transaction.type === "BUY") {
+      gramsHeld += transaction.grams;
+      costBasis += transaction.grams * transaction.pricePerGram;
+      investedCapital += transaction.grams * transaction.pricePerGram;
+      totalBoughtGrams += transaction.grams;
+      continue;
+    }
+
+    totalSoldGrams += transaction.grams;
+
+    if (gramsHeld <= 0) {
+      continue;
+    }
+
+    const saleGrams = Math.min(transaction.grams, gramsHeld);
+    const averageCostPerGram = gramsHeld > 0 ? costBasis / gramsHeld : 0;
+    const removedCost = saleGrams * averageCostPerGram;
+
+    gramsHeld -= saleGrams;
+    costBasis -= removedCost;
+    realizedProfitLoss += saleGrams * transaction.pricePerGram - removedCost;
+  }
+
+  const averageBuyPrice = gramsHeld > 0 ? costBasis / gramsHeld : 0;
+  const currentValue = gramsHeld * pricePerGram;
+  const unrealizedProfitLoss = currentValue - costBasis;
+  const totalProfitLoss = realizedProfitLoss + unrealizedProfitLoss;
+  const profitPercent = investedCapital > 0 ? (totalProfitLoss / investedCapital) * 100 : 0;
 
   return {
+    gramsHeld: round(gramsHeld, 4),
+    averageBuyPrice: round(averageBuyPrice),
     currentValue: round(currentValue),
-    totalCost: round(totalCost),
-    profitLoss: round(profitLoss),
+    totalCost: round(costBasis),
+    investedCapital: round(investedCapital),
+    realizedProfitLoss: round(realizedProfitLoss),
+    unrealizedProfitLoss: round(unrealizedProfitLoss),
+    profitLoss: round(totalProfitLoss),
     profitPercent: round(profitPercent),
+    totalBoughtGrams: round(totalBoughtGrams, 4),
+    totalSoldGrams: round(totalSoldGrams, 4),
   };
 }
 

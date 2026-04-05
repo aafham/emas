@@ -19,6 +19,7 @@ import { AUTO_REFRESH_MS, DEFAULT_PREFERENCES } from "@/lib/constants";
 import {
   AlertState,
   GoldApiResponse,
+  PortfolioTransaction,
   PortfolioState,
   PreferencesState,
 } from "@/lib/types";
@@ -35,7 +36,7 @@ import {
 
 export function GoldDashboard() {
   const [preferences, setPreferences] = useState<PreferencesState>(DEFAULT_PREFERENCES);
-  const [portfolio, setPortfolio] = useState<PortfolioState>({ grams: 0, averageBuyPrice: 0 });
+  const [portfolio, setPortfolio] = useState<PortfolioState>({ transactions: [] });
   const [alertState, setAlertState] = useState<AlertState>({ enabled: false, targetPrice: 0 });
   const [priceData, setPriceData] = useState<GoldApiResponse | null>(null);
   const [calculatorInput, setCalculatorInput] = useState("1000");
@@ -249,9 +250,6 @@ export function GoldDashboard() {
         : calculatorNumber <= 0
           ? "Value must be more than 0."
           : null;
-  const portfolioGramsError = portfolio.grams < 0 ? "Total grams cannot be negative." : null;
-  const portfolioAverageError =
-    portfolio.averageBuyPrice < 0 ? "Average buy price cannot be negative." : null;
   const alertTargetError =
     alertState.targetPrice < 0
       ? "Target price cannot be negative."
@@ -289,6 +287,24 @@ export function GoldDashboard() {
 
     await deferredPrompt.prompt();
     setInstallable(null);
+  };
+
+  const addPortfolioTransaction = (transaction: Omit<PortfolioTransaction, "id">) => {
+    setPortfolio((current) => ({
+      transactions: [
+        ...current.transactions,
+        {
+          ...transaction,
+          id: crypto.randomUUID(),
+        },
+      ],
+    }));
+  };
+
+  const deletePortfolioTransaction = (transactionId: string) => {
+    setPortfolio((current) => ({
+      transactions: current.transactions.filter((transaction) => transaction.id !== transactionId),
+    }));
   };
 
   return (
@@ -347,9 +363,8 @@ export function GoldDashboard() {
             <PortfolioSection
               portfolio={portfolio}
               portfolioSummary={portfolioSummary}
-              portfolioGramsError={portfolioGramsError}
-              portfolioAverageError={portfolioAverageError}
-              onSetPortfolio={setPortfolio}
+              onAddTransaction={addPortfolioTransaction}
+              onDeleteTransaction={deletePortfolioTransaction}
             />
           </div>
           <AlertsSection

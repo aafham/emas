@@ -25,9 +25,19 @@ export interface GoldApiResponse {
   isFallback: boolean;
 }
 
-export interface PortfolioState {
+export type PortfolioTransactionType = "BUY" | "SELL";
+
+export interface PortfolioTransaction {
+  id: string;
+  type: PortfolioTransactionType;
   grams: number;
-  averageBuyPrice: number;
+  pricePerGram: number;
+  createdAt: string;
+  note?: string;
+}
+
+export interface PortfolioState {
+  transactions: PortfolioTransaction[];
 }
 
 export interface AlertState {

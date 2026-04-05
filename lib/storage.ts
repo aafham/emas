@@ -2,6 +2,7 @@ import {
   AlertState,
   GoldApiResponse,
   PortfolioState,
+  PortfolioTransaction,
   PreferencesState,
 } from "@/lib/types";
 import { DEFAULT_PREFERENCES } from "@/lib/constants";
@@ -41,10 +42,36 @@ export function savePreferences(value: PreferencesState) {
 }
 
 export function loadPortfolio(): PortfolioState {
-  return parseJson<PortfolioState>(
-    typeof window === "undefined" ? null : localStorage.getItem(KEYS.portfolio),
-    { grams: 0, averageBuyPrice: 0 },
-  );
+  const fallback: PortfolioState = { transactions: [] };
+  const rawPortfolio = parseJson<
+    PortfolioState | { grams?: number; averageBuyPrice?: number; transactions?: PortfolioTransaction[] }
+  >(typeof window === "undefined" ? null : localStorage.getItem(KEYS.portfolio), fallback);
+
+  if (Array.isArray(rawPortfolio.transactions)) {
+    return { transactions: rawPortfolio.transactions };
+  }
+
+  const raw = rawPortfolio as { grams?: number; averageBuyPrice?: number };
+
+  const grams = Number(raw.grams) || 0;
+  const averageBuyPrice = Number(raw.averageBuyPrice) || 0;
+
+  if (grams <= 0 || averageBuyPrice <= 0) {
+    return fallback;
+  }
+
+  return {
+    transactions: [
+      {
+        id: "legacy-holding",
+        type: "BUY",
+        grams,
+        pricePerGram: averageBuyPrice,
+        createdAt: new Date().toISOString(),
+        note: "Imported from legacy portfolio",
+      },
+    ],
+  };
 }
 
 export function savePortfolio(value: PortfolioState) {
