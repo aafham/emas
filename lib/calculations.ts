@@ -26,7 +26,7 @@ export function convertValue(
   input: number,
   adjustedPricePerGram: number,
 ) {
-  if (!Number.isFinite(input)) {
+  if (!Number.isFinite(input) || adjustedPricePerGram <= 0) {
     return 0;
   }
 

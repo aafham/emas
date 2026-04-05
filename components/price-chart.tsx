@@ -33,9 +33,15 @@ export function PriceChart({ data, currency, usdMyrRate }: PriceChartProps) {
           }),
     value: currency === "MYR" ? point.adjustedPrice : point.adjustedPrice / usdMyrRate,
   }));
+  const firstValue = normalized[0]?.value;
+  const lastValue = normalized[normalized.length - 1]?.value;
+  const chartSummary =
+    normalized.length > 1 && firstValue !== undefined && lastValue !== undefined
+      ? `Price chart with ${normalized.length} points. It starts at ${formatCurrency(firstValue, currency)} and ends at ${formatCurrency(lastValue, currency)}.`
+      : "Price chart unavailable until pricing data is loaded.";
 
   return (
-    <div className="h-72 w-full">
+    <div className="h-72 w-full" role="img" aria-label={chartSummary}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={normalized}>
           <defs>
